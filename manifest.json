@@ -2,7 +2,7 @@
   "name": "מתכון פיצה עם פוליש",
   "short_name": "פיצה 🍕",
   "description": "מחשבון כמויות ולוח זמנים לבצק פיצה נפולטני",
-  "start_url": "index.html",
+  "start_url": "/pizza/",
   "display": "standalone",
   "background_color": "#fdf6f0",
   "theme_color": "#b03020",

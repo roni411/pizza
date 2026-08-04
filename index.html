@@ -476,7 +476,7 @@ function openGemini() {
         const path = 'gemini.google.com/u/1/app/e5d69c7c907aa143?pageId=none';
         const fallback = encodeURIComponent(url);
         // נסיון ראשון: פתיחת אפליקציית Gemini
-        window.location.href = `intent://${path}#Intent;scheme=https;package=com.google.android.apps.bard;S.browser_fallback_url=${fallback};end`;
+        window.location.href = `intent://${path}#Intent;scheme=https;S.browser_fallback_url=${fallback};end`;
     } else {
         window.open(url, '_blank', 'noopener,noreferrer');
     }

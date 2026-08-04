@@ -472,11 +472,8 @@ if ('serviceWorker' in navigator) {
 function openGemini() {
     const url = 'https://gemini.google.com/u/1/app/e5d69c7c907aa143?pageId=none';
     const isAndroid = /android/i.test(navigator.userAgent);
-    if (isAndroid) {
-        const path = 'gemini.google.com/u/1/app/e5d69c7c907aa143?pageId=none';
-        const fallback = encodeURIComponent(url);
-        // נסיון ראשון: פתיחת אפליקציית Gemini
-        window.location.href = `intent://${path}#Intent;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;scheme=https;S.browser_fallback_url=${fallback};end`;
+    if (isAndroid && navigator.share) {
+        navigator.share({ url }).catch(() => window.open(url, '_blank', 'noopener,noreferrer'));
     } else {
         window.open(url, '_blank', 'noopener,noreferrer');
     }

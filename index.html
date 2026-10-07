@@ -441,20 +441,37 @@ function updateTimeline() {
 //  אתחול
 // ═══════════════════════════════════════════
 (function init() {
-    // ברירת מחדל: שישי הבא בשעה 19:00
-    const now = new Date();
-    const daysUntilFriday = (5 - now.getDay() + 7) % 7 || 7;
-    const friday = new Date(now);
-    friday.setDate(now.getDate() + daysUntilFriday);
-    friday.setHours(19, 0, 0, 0);
-    document.getElementById('pizzaTime').value = toInputVal(friday);
+    // שחזור ערכים שמורים, או ברירת מחדל: שישי הבא בשעה 19:00
+    const savedBalls = localStorage.getItem('pizza_numBalls');
+    const savedTime  = localStorage.getItem('pizza_time');
+
+    if (savedBalls) {
+        document.getElementById('numBalls').value = savedBalls;
+    }
+
+    if (savedTime) {
+        document.getElementById('pizzaTime').value = savedTime;
+    } else {
+        const now = new Date();
+        const daysUntilFriday = (5 - now.getDay() + 7) % 7 || 7;
+        const friday = new Date(now);
+        friday.setDate(now.getDate() + daysUntilFriday);
+        friday.setHours(19, 0, 0, 0);
+        document.getElementById('pizzaTime').value = toInputVal(friday);
+    }
 
     updateIngredients();
     updateTimeline();
 })();
 
-document.getElementById('numBalls').addEventListener('input', updateIngredients);
-document.getElementById('pizzaTime').addEventListener('input', updateTimeline);
+document.getElementById('numBalls').addEventListener('input', () => {
+    updateIngredients();
+    localStorage.setItem('pizza_numBalls', document.getElementById('numBalls').value);
+});
+document.getElementById('pizzaTime').addEventListener('input', () => {
+    updateTimeline();
+    localStorage.setItem('pizza_time', document.getElementById('pizzaTime').value);
+});
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
